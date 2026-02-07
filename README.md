@@ -69,35 +69,43 @@ app.i18n.changeLanguage("ua");
 
 the value of `textField.text` is updated automatically to match the current language.
 
+You can also inject `i18next` controller into any PIXI.AbstractText (Bitmap, Canvas, Split, etc) by calling:
+
+```ts
+I18nText.from(textContainer, {
+  key: "my-text-key"
+});
+```
+
+
 ## I18nText
 
 `I18nText` accepts a combination of:
 
-* standard `PIXI.Text` / `CanvasTextOptions`
-* additional i18n-specific options
+- standard `PIXI.Text` / `CanvasTextOptions`
+- additional i18n-specific options
 
-### I18nTextOptions
+### I18nOptions
 
 ```ts
-interface I18nTextOptions {
+export interface I18nOptions<T extends AbstractTextField> {
   /**
-   * Translation key used to resolve text from i18next resources.
+   * Translation key used to resolve the text from the i18next instance automatically.
    */
   key: string;
 
   /**
-   * Optional custom i18next instance.
-   * If not provided, the application's i18n instance is used.
+   * Optional i18next instance. If not provided, the global i18n instance will be used.
    */
   i18nInstance?: i18n;
 
   /**
-   * Optional hook that allows overriding text resolution
-   * when the language changes.
+   * Optional hook that is called on every language change.
    */
   languageChangeHook?: (
+    this: I18nController<T>,
     key: string,
-    language: string
+    lng: string,
   ) => string;
 }
 ```
@@ -118,6 +126,12 @@ The plugin behaves like a native Pixi subsystem rather than an external helper.
 ## Build and development
 
 This project uses [**Bun**][bun-url]  as the package manager and script runner.
+
+### Install dependencies
+
+```bash
+bun install
+```
 
 ### Build the package
 
@@ -155,8 +169,8 @@ bun run test:watch
 
 ## TODO
 
-- [ ] Create mixin to mix I18nText methods into any instance that implements `AbstractText`.
-- [ ] Create `static I18nText.from()` to make instance from abstraction.
+- [x] Create mixin to mix I18nText methods into any instance that implements `AbstractText`.
+- [x] Create `static I18nText.from()` to make instance from abstraction.
 
 ## License
 

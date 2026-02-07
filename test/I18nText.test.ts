@@ -52,7 +52,7 @@ describe("i18next text", () => {
       i18nInstance: i18next.createInstance(),
     });
 
-    expect(textField.i18nInstance).not.toBe(app.i18n);
+    expect(textField.i18n).not.toBe(app.i18n);
   });
 
   test("custom language change hook", async () => {
@@ -74,10 +74,32 @@ describe("i18next text", () => {
     const textField = new I18nText({
       key: "hello",
       languageChangeHook(key: string, _lng: string) {
-        return this.i18nInstance.t(key, _lng) + "!!!";
+        return this.instance.t(key, _lng) + "!!!";
       },
     });
 
     expect(textField.text).toBe(resources.en.translation.hello + "!!!");
+  });
+
+  test("i18n injected into AbstractText", async () => {
+    class MyText {
+      set text(value: string) {
+        value;
+      }
+
+      get destroyed() {
+        return false;
+      }
+    }
+
+    const myText = new MyText();
+
+    // @ts-ignore
+    expect(myText.i18n).not.toBeDefined();
+
+    I18nText.from(myText, { key: "zuzu" });
+
+    // @ts-ignore
+    expect(myText.i18n).toBeDefined();
   });
 });

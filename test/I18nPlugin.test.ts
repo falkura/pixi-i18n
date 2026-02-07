@@ -3,6 +3,10 @@ import { Application } from "pixi.js";
 import i18next from "i18next";
 
 describe("i18next extension", () => {
+  test("instance exists", () => {
+    expect(i18next).toBeDefined();
+  });
+
   test("plugin registers on import", async () => {
     expect(
       // @ts-ignore
@@ -15,10 +19,6 @@ describe("i18next extension", () => {
       // @ts-ignore
       Application._plugins.find((p) => p?.extension?.name === "i18n"),
     ).toBeDefined();
-  });
-
-  test("instance exists", () => {
-    expect(i18next).toBeDefined();
   });
 
   test("application have shared instance", async () => {
