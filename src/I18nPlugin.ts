@@ -52,10 +52,9 @@ declare global {
  *
  * @example
  * ```ts
- * import { Application, extensions } from "pixi.js";
+ * import { Application } from "pixi.js";
  * import { I18nPlugin } from "pixi-i18n";
  *
- * extensions.add(I18nPlugin);
  * const app = new Application();
  *
  * await app.init({
