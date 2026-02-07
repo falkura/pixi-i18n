@@ -6,6 +6,6 @@ export default defineConfig({
   browser: {
     enabled: true,
     provider: "playwright",
-    headless: true,
+    headless: true, // Do not open browser window
   },
 });
