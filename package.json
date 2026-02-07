@@ -1,7 +1,7 @@
 {
   "name": "pixi-i18n",
   "type": "module",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "i18n plugin for PixiJS with i18next integration",
   "scripts": {
     "build": "rslib build",
