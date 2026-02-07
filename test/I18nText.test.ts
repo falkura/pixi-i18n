@@ -1,13 +1,13 @@
 import { describe, expect, test } from "@rstest/core";
-import { I18nPlugin } from "../src/I18nPlugin";
 import { I18nText } from "../src/I18nText";
-import { Application, extensions } from "pixi.js";
+import { Application } from "pixi.js";
 import i18next from "i18next";
 
 describe("i18next text", () => {
   test("text reacts on language change", async () => {
+    await import("../src/index");
+
     const app = new Application();
-    extensions.add(I18nPlugin);
 
     const resources = {
       en: {
@@ -41,8 +41,9 @@ describe("i18next text", () => {
   });
 
   test("text has different i18next instance", async () => {
+    await import("../src/index");
+
     const app = new Application();
-    extensions.add(I18nPlugin);
 
     await app.init();
 
@@ -55,8 +56,9 @@ describe("i18next text", () => {
   });
 
   test("custom language change hook", async () => {
+    await import("../src/index");
+
     const app = new Application();
-    extensions.add(I18nPlugin);
 
     const resources = {
       en: { translation: { hello: "Hello!" } },

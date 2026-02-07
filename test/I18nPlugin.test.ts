@@ -1,16 +1,30 @@
 import { describe, expect, test } from "@rstest/core";
-import { I18nPlugin } from "../src/I18nPlugin";
-import { Application, extensions } from "pixi.js";
+import { Application } from "pixi.js";
 import i18next from "i18next";
 
 describe("i18next extension", () => {
+  test("plugin registers on import", async () => {
+    expect(
+      // @ts-ignore
+      Application._plugins.find((p) => p?.extension?.name === "i18n"),
+    ).not.toBeDefined();
+
+    await import("../src/index");
+
+    expect(
+      // @ts-ignore
+      Application._plugins.find((p) => p?.extension?.name === "i18n"),
+    ).toBeDefined();
+  });
+
   test("instance exists", () => {
     expect(i18next).toBeDefined();
   });
 
   test("application have shared instance", async () => {
+    await import("../src/index");
+
     const app = new Application();
-    extensions.add(I18nPlugin);
 
     await app.init();
 
@@ -18,8 +32,9 @@ describe("i18next extension", () => {
   });
 
   test("application have custom instance", async () => {
+    await import("../src/index");
+
     const app = new Application();
-    extensions.add(I18nPlugin);
 
     const customI18n = i18next.createInstance();
 
