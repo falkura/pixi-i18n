@@ -1,44 +1,174 @@
-# pixi-i18n
+<a id="readme-top"></a>
 
-i18ntext is the text that integrates i18next library (link) into pixi.js ecosystem
+# pixi-i18n 🌐
 
-modules esm and cjs
+<p align="center">
+<a href="https://npmjs.com/package/pixi-i18n"><img src="https://img.shields.io/npm/v/pixi-i18n" alt="npm package"></a>
+<img src="https://img.shields.io/badge/license-MIT-green.svg" alt="license" />
+</p>
 
-test coverage with rstest
+**pixi-i18n** is a plugin for [PixiJS v8.x][pixijs-url] that integrates [i18next][i18next-url] into the Pixi application lifecycle using the Pixi Extensions architecture.
 
-rstest requires node, you need to have node 18+ (check rstest docs)
+It provides:
+- automatic **i18next** initialization on `Application.init`
+- a reactive [I18nText](#i18ntext) class that updates when language changes
+- full TypeScript typings via Pixi global mixins
 
-if you using only bun, you need to install fnm https://github.com/Schniz/fnm and run test_fnm for tests
+## Installation
 
-playwright chromium also required for tests: bunx playwright install chromium or npx playwright install chromium
+```bash
+bun install pixi-i18n
+```
 
-bun used as package manager: https://bun.com
+## Basic usage
 
-pixi extensions architecture based https://pixijs.com/8.x/guides/concepts/architecture
-
-if you dont want to test, you can skip parts with fnm and playwright
-
-usage:
+The plugin must be imported **before** calling `Application.init` so the extension is registered.
 
 ```ts
-import "pixi-i18n" // register extension
+import "pixi-i18n"; // register extension
+
 import { Application } from "pixi.js";
-import { I18nText } from "pixi-i18n";
 
 const app = new Application();
 
-// create i18n text
-const textField = new I18nText({
-    key: "hello",
-});
-
 await app.init({
-    i18n: {} // i18next options
+  ...
+  // i18next initialization options
+  i18n: {
+    ...
+    resources,
+  },
 });
+```
 
+After initialization, the i18next instance is available on the application:
+
+```ts
 app.i18n.changeLanguage("ua");
 ```
 
-full typization with pixi global mixins
+## Creating localized text
 
-build to build, dev to develop, test to test :)
+To create a text object bound to i18next, use [`I18nText`](#i18ntext).
+
+```ts
+import { I18nText } from "pixi-i18n";
+
+const textField = new I18nText({
+  key: "my-text-key", // translation key from i18next resources
+});
+```
+
+`I18nText` automatically subscribes to the i18next instance attached to the application.
+
+When the language changes:
+
+```ts
+app.i18n.changeLanguage("ua");
+```
+
+the value of `textField.text` is updated automatically to match the current language.
+
+## I18nText
+
+`I18nText` accepts a combination of:
+
+* standard `PIXI.Text` / `CanvasTextOptions`
+* additional i18n-specific options
+
+### I18nTextOptions
+
+```ts
+interface I18nTextOptions {
+  /**
+   * Translation key used to resolve text from i18next resources.
+   */
+  key: string;
+
+  /**
+   * Optional custom i18next instance.
+   * If not provided, the application's i18n instance is used.
+   */
+  i18nInstance?: i18n;
+
+  /**
+   * Optional hook that allows overriding text resolution
+   * when the language changes.
+   */
+  languageChangeHook?: (
+    key: string,
+    language: string
+  ) => string;
+}
+```
+
+This allows `I18nText` to behave exactly like a normal Pixi text object, while remaining fully reactive to language changes.
+
+## Architecture
+
+This project is based on the [PixiJS Extensions Architecture][pixijs-architecture-url].
+
+Key points:
+
+- uses `ExtensionType.Application` to integrate with `Application.init`
+- extends Pixi types via **global mixins** with fully typed public API
+
+The plugin behaves like a native Pixi subsystem rather than an external helper.
+
+## Build and development
+
+This project uses [**Bun**][bun-url]  as the package manager and script runner.
+
+### Build the package
+
+```bash
+bun run build
+```
+
+### Development (watch mode)
+
+```bash
+bun run dev
+```
+
+## Testing
+
+Tests are written using **RSTest**.
+
+To run tests successfully, you must:
+
+1. Set up the [Node environment][rstest-environment-url] with **fnm**
+2. Prepare browser [testing dependencies][rstest-browser-url]
+
+> [!WARNING]
+> package test scripts will work **only with fnm** node manager!
+
+After setup, run:
+
+```bash
+# One time project test
+bun run test
+
+# Tests in watch mode
+bun run test:watch
+```
+
+## TODO
+
+- [ ] Create mixin to mix I18nText methods into any instance that implements `AbstractText`.
+- [ ] Create `static I18nText.from()` to make instance from abstraction.
+
+## License
+
+MIT
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+[pixijs-url]: https://pixijs.com/
+[bun-url]: https://bun.com
+[pixijs-architecture-url]: https://pixijs.com/8.x/guides/concepts/architecture
+[i18next-url]: https://www.i18next.com/
+[rstest-environment-url]: https://rstest.rs/guide/start/quick-start#setup-environment
+[rstest-browser-url]: https://rstest.rs/guide/browser-testing/getting-started#1-install-dependencies
