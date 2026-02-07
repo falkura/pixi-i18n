@@ -19,6 +19,7 @@
     "@rstest/browser": "^0.8.3",
     "@rstest/core": "^0.8.3",
     "playwright": "^1.58.2",
+    "rsbuild-plugin-dts": "^0.19.5",
     "typescript": "^5.9.3"
   },
   "dependencies": {
@@ -37,7 +38,7 @@
     ".": {
       "import": "./lib/esm/index.js",
       "require": "./lib/cjs/index.cjs",
-      "types": "./lib/esm/index.d.ts"
+      "types": "./lib/types/index.d.ts"
     }
   },
   "author": "Vladyslav Kyiashko",

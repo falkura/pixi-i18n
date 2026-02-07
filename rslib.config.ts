@@ -1,11 +1,12 @@
 import { defineConfig, LibConfig, RslibConfig } from "@rslib/core";
+import { pluginDts } from "rsbuild-plugin-dts";
 
 export default defineConfig(() => {
   const esmLib: LibConfig = {
     format: "esm",
     syntax: "esnext",
     bundle: true,
-    dts: true,
+    dts: false,
     output: {
       distPath: "./lib/esm",
     },
@@ -22,6 +23,11 @@ export default defineConfig(() => {
   };
 
   return {
+    plugins: [
+      pluginDts({
+        distPath: "./lib/types",
+      }),
+    ],
     lib: [esmLib, cjsLib],
     output: {
       cleanDistPath: true,
