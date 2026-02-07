@@ -1,7 +1,8 @@
 {
   "name": "pixi-i18n",
   "type": "module",
-  "private": true,
+  "version": "0.1.0",
+  "description": "i18n plugin for PixiJS with i18next integration",
   "scripts": {
     "build": "rslib build",
     "dev": "rslib build -w",
@@ -9,6 +10,9 @@
     "test:watch": "rstest watch",
     "test_fnm": "fnm exec '--using=lts/*' bun run test"
   },
+  "sideEffects": [
+    "./src/I18nRegistration.ts"
+  ],
   "devDependencies": {
     "@rslib/core": "^0.19.5",
     "@rstest/adapter-rslib": "^0.2.0",
@@ -18,8 +22,10 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "i18next": "^25.8.4",
-    "pixi.js": "^8.13.2"
+    "i18next": "^25.8.4"
+  },
+  "peerDependencies": {
+    "pixi.js": "^8.0.0"
   },
   "files": [
     "lib",
@@ -32,5 +38,18 @@
       "require": "./lib/cjs/index.cjs",
       "types": "./lib/esm/index.d.ts"
     }
-  }
+  },
+  "author": "Vladyslav Kyiashko",
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "pixi",
+    "pixi.js",
+    "pixi-plugin",
+    "i18n",
+    "i18next",
+    "localization"
+  ],
+  "license": "MIT"
 }

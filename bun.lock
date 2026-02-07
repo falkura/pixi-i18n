@@ -6,7 +6,6 @@
       "name": "pixi-i18n",
       "dependencies": {
         "i18next": "^25.8.4",
-        "pixi.js": "^8.13.2",
       },
       "devDependencies": {
         "@rslib/core": "^0.19.5",
@@ -15,6 +14,9 @@
         "@rstest/core": "^0.8.3",
         "playwright": "^1.58.2",
         "typescript": "^5.9.3",
+      },
+      "peerDependencies": {
+        "pixi.js": "^8.0.0",
       },
     },
   },

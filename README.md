@@ -14,22 +14,16 @@ playwright chromium also required for tests: bunx playwright install chromium or
 
 bun used as package manager: https://bun.com
 
-MIT license
-
 pixi extensions architecture based https://pixijs.com/8.x/guides/concepts/architecture
 
 if you dont want to test, you can skip parts with fnm and playwright
 
-add and configure .npmrc
-
 usage:
 
 ```ts
-import { extensions, Application } from "pixi.js";
-import { I18nPlugin, I18nText } from "pixi-i18n";
-
-// register extension
-extensions.add(I18nPlugin);
+import "pixi-i18n" // register extension
+import { Application } from "pixi.js";
+import { I18nText } from "pixi-i18n";
 
 const app = new Application();
 
