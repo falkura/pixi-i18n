@@ -6,9 +6,9 @@
   "scripts": {
     "build": "rslib build",
     "dev": "rslib build -w",
-    "test": "rstest",
-    "test:watch": "rstest watch",
-    "test_fnm": "fnm exec '--using=lts/*' bun run test"
+    "test": "fnm exec '--using=lts/*' rstest",
+    "test:watch": "fnm exec '--using=lts/*' rstest watch",
+    "prepublishOnly": "bun run test && bun run build"
   },
   "sideEffects": [
     "./src/I18nRegistration.ts"
