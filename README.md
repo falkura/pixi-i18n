@@ -17,7 +17,7 @@ It provides:
 ## Installation
 
 ```bash
-bun install pixi-i18n
+bun add pixi-i18n
 ```
 
 ## Basic usage
@@ -36,7 +36,18 @@ await app.init({
   // i18next initialization options
   i18n: {
     ...
-    resources,
+    resources: {
+      en: {
+        translation: {
+          "my-text-key": "Hello!",
+        },
+      },
+      ua: {
+        translation: {
+          "my-text-key": "Привіт!",
+        },
+      },
+    },
   },
 });
 ```
