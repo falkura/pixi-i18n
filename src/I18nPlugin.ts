@@ -92,9 +92,6 @@ export class I18nPlugin {
       this.i18n = i18next;
     }
 
-    this.i18n.init({
-      showSupportNotice: false,
-      ...(options?.i18n || {}),
-    });
+    this.i18n.init(options?.i18n || {});
   }
 }

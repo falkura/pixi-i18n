@@ -17,7 +17,7 @@ It provides:
 ## Installation
 
 ```bash
-bun add pixi-i18n
+npm install pixi-i18n
 ```
 
 ## Basic usage
